@@ -1,29 +1,65 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { login } from "./api/loginApi";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
-    return (
-        <main>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const {setAuth} = useAuth()
+
+  const navigate = useNavigate()
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await login({email, password})
+      if (response.status === 200) {
+        const { token, user } = response.data;
+        if (token) {
+          const accessToken = token.accessToken;
+          const refreshToken = token.refreshToken;
+
+          setAuth({user, accessToken, refreshToken});
+
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
+  return (
+    <main>
       <section className="container">
         {/* <!-- Login Form into a box center of the page --> */}
         <div className="w-full md:w-1/2 mx-auto bg-[#030317] p-8 rounded-md mt-12">
           <h2 className="text-2xl font-bold mb-6">Login</h2>
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <div className="mb-6">
-              <label htmlFor="email" className="block mb-2">Email</label>
+              <label htmlFor="email" className="block mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
               />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className="block mb-2">Password</label>
+              <label htmlFor="password" className="block mb-2">
+                Password
+              </label>
               <input
                 type="password"
                 id="password"
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
               />
             </div>
@@ -36,13 +72,19 @@ const Login = () => {
               </button>
             </div>
             <p className="text-center">
-              Don't have an account? <Link to={'/register'} className="text-indigo-600 hover:underline">Register</Link>
+              Don't have an account?{" "}
+              <Link
+                to={"/register"}
+                className="text-indigo-600 hover:underline"
+              >
+                Register
+              </Link>
             </p>
           </form>
         </div>
       </section>
     </main>
-    );
+  );
 };
 
 export default Login;

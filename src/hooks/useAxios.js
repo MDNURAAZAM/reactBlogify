@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import axios, { Axios } from "axios";
+
 import { useAuth } from "../contexts/AuthContext";
 import { axiosInstance } from "../axios/api";
 
@@ -10,9 +10,9 @@ const useAxios = () => {
     // Add a request interceptor
     const requestIntercept = axiosInstance.interceptors.request.use(
       (config) => {
-        const authToken = auth?.authToken;
-        if (authToken) {
-          config.headers.Authorization = `Bearer ${authToken}`;
+        const accessToken = auth?.accessToken;
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
       },
@@ -32,14 +32,14 @@ const useAxios = () => {
 
           try {
             const refreshToken = auth?.refreshToken;
-            const response = await axios.post(
-              `${import.meta.env.BASE_URL}/auth/refresh-token`,
+            const response = await axiosInstance.post(
+              `/auth/refresh-token`,
               { refreshToken }
             );
             const { accessToken } = response?.data;
-            setAuth({ ...auth, authToken: accessToken });
+            setAuth({ ...auth, accessToken });
             // Retry the original request with the new token
-            originalRequest.headers.Authorization = `Bearer ${token}`;
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
             return axios(originalRequest);
           } catch (error) {
             throw error;
@@ -53,7 +53,7 @@ const useAxios = () => {
       axiosInstance.interceptors.request.eject(requestIntercept);
       axiosInstance.interceptors.response.eject(responseIntercept);
     };
-  }, [auth.authToken]);
+  }, [auth?.accessToken]);
 
   return { axiosInstance };
 };
