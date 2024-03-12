@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "./api/registerApi";
 
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,12 +20,12 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register(data)
+      const response = await register(data);
       if (response.status === 201) {
         navigate("/login");
       }
     } catch (error) {
-      console.log(error);
+      setError(error?.response?.data?.error);
     }
   };
 
@@ -86,6 +87,7 @@ const Register = () => {
                 className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
               />
             </div>
+            {error && <p style={{ color: "red", margin: "5px" }}>{error}</p>}
             <div className="mb-6">
               <button
                 type="submit"

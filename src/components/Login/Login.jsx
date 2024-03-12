@@ -6,29 +6,30 @@ import { useAuth } from "../../contexts/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {setAuth} = useAuth()
+  const [error, setError] = useState("");
+  const { setAuth } = useAuth();
 
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login({email, password})
+      const response = await login({ email, password });
       if (response.status === 200) {
         const { token, user } = response.data;
         if (token) {
           const accessToken = token.accessToken;
           const refreshToken = token.refreshToken;
 
-          setAuth({user, accessToken, refreshToken});
+          setAuth({ user, accessToken, refreshToken });
 
           navigate("/");
         }
+        setError("");
       }
     } catch (error) {
-      console.log(error);
+      setError(error?.response?.data?.error);
     }
-    
   };
   return (
     <main>
@@ -63,6 +64,7 @@ const Login = () => {
                 className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
               />
             </div>
+            {error && <p style={{color: 'red', margin: '5px'}}>{error}</p>}
             <div className="mb-6">
               <button
                 type="submit"
