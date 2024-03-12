@@ -7,20 +7,20 @@ import { useAuth } from "../../contexts/AuthContext";
 import { baseURL } from "../../../config";
 
 const Header = () => {
-  const { auth,setAuth } = useAuth();
-  const navigate = useNavigate()
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
   const { id, firstName, lastName, avatar } = auth?.user || {};
   const fullName = `${firstName} ${lastName}`;
 
   const authorImage = `${baseURL}/uploads/avatar/${avatar}`;
 
   const handleLogClick = () => {
-    if(auth?.accessToken){
+    if (auth?.accessToken) {
       //user logged in
-      setAuth({})
-    }else{
+      setAuth({});
+    } else {
       //user logged out
-      navigate('/login')
+      navigate("/login");
     }
   };
 
@@ -48,15 +48,17 @@ const Header = () => {
                 Write
               </Link>
             </li>
-            <li>
-              <a
-                href="./search.html"
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <img src={searchIcon} alt="Search" />
-                <span>Search</span>
-              </a>
-            </li>
+            {id && (
+              <li>
+                <a
+                  href="./search.html"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <img src={searchIcon} alt="Search" />
+                  <span>Search</span>
+                </a>
+              </li>
+            )}
             <li>
               <button
                 onClick={handleLogClick}
