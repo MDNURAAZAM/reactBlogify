@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
+import BlogsContainer from "../components/BlogsContainer/BlogsContainer";
 
 const HomePage = () => {
-    return (
-        <div>
-            HomePage
-        </div>
-    );
+  return <BlogsContainer />;
 };
 
 export default HomePage;
