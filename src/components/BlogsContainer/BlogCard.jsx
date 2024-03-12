@@ -4,8 +4,10 @@ import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
 import { formatDate } from "../../utils/formatDate";
 import { baseURL } from "../../../config";
+import { Link, useNavigate } from "react-router-dom";
 
 const BlogCard = ({ blogDetails }) => {
+  const navigate = useNavigate();
   const {
     id,
     title,
@@ -28,8 +30,12 @@ const BlogCard = ({ blogDetails }) => {
     setShowModal((s) => !s);
   };
 
+  const handleBlogClick = () => {
+    navigate(`/blogs/${id}`);
+  };
+
   return (
-    <div className="blog-card">
+    <div className="blog-card" onClick={handleBlogClick}>
       <img
         className="blog-thumb"
         src={blogImage}
@@ -39,11 +45,11 @@ const BlogCard = ({ blogDetails }) => {
         }}
       />
       <div className="mt-2 relative">
-        <a href="./single-blog.html">
+        <Link to={`/blogs/${id}`}>
           <h3 className="text-slate-300 text-xl lg:text-2xl">
-            <a href="./single-blog.html">{title}</a>
+            <Link to={`/blogs/${id}`}>{title}</Link>
           </h3>
-        </a>
+        </Link>
         <p className="mb-6 text-base text-slate-500 mt-1">{content}</p>
 
         {/* <!-- Meta Informations --> */}
@@ -51,14 +57,14 @@ const BlogCard = ({ blogDetails }) => {
           <div className="flex items-center capitalize space-x-2">
             <div className="avater-img bg-indigo-600 text-white">
               {author?.avatar ? (
-                 <img
-                 className="avater-img"
-                 src={authorImage}
-                 alt={title}
-                 onError={(e) => {
-                   e.currentTarget.src = "https://via.placeholder.com/150";
-                 }}
-               />
+                <img
+                  className="avater-img"
+                  src={authorImage}
+                  alt={fullName}
+                  onError={(e) => {
+                    e.currentTarget.src = "https://via.placeholder.com/150";
+                  }}
+                />
               ) : (
                 <span className="">{fullName.charAt(0)}</span>
               )}
@@ -75,7 +81,9 @@ const BlogCard = ({ blogDetails }) => {
           </div>
 
           <div className="text-sm px-2 py-1 text-slate-700">
-            <span>{likes?.length} Likes</span>
+            <span>
+              {likes?.length} {likes?.length > 1 ? "Likes" : "Like"}
+            </span>
           </div>
         </div>
 

@@ -8,7 +8,7 @@ const BlogContents = () => {
   return (
     <div className="space-y-3 md:col-span-5">
       {blogs?.length > 0 &&
-        blogs.map((blog) => <BlogCard key={blog.id} blogDetails={blog} />)}
+        blogs?.map((blog) => <BlogCard key={blog.id} blogDetails={blog} />)}
     </div>
   );
 };

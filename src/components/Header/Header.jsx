@@ -1,10 +1,29 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
 import searchIcon from "../../assets/icons/search.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthorName from "../AuthorName/AuthorName";
+import { useAuth } from "../../contexts/AuthContext";
+import { baseURL } from "../../../config";
 
 const Header = () => {
+  const { auth,setAuth } = useAuth();
+  const navigate = useNavigate()
+  const { id, firstName, lastName, avatar } = auth?.user || {};
+  const fullName = `${firstName} ${lastName}`;
+
+  const authorImage = `${baseURL}/uploads/avatar/${avatar}`;
+
+  const handleLogClick = () => {
+    if(auth?.accessToken){
+      //user logged in
+      setAuth({})
+    }else{
+      //user logged out
+      navigate('/login')
+    }
+  };
+
   return (
     <header>
       <nav className="container">
@@ -39,25 +58,35 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <Link
-                to={"/login"}
+              <button
+                onClick={handleLogClick}
                 className="text-white/50 hover:text-white transition-all duration-200"
               >
-                {" "}
-                Login{" "}
-              </Link>
+                {id ? "Logout" : "Login"}
+              </button>
             </li>
-            <li className="flex items-center">
-              {/* <!-- Circular Div with background color --> */}
-              <div className="avater-img bg-orange-600 text-white">
-                <span className="">S</span>
-                {/* <!-- User's first name initial --> */}
-              </div>
-
-              {/* <!-- Logged-in user's name --> */}
-              <AuthorName />
-              {/* <!-- Profile Image --> */}
-            </li>
+            {id && (
+              <li className="flex items-center">
+                {/* <!-- Circular Div with background color --> */}
+                <div className="avater-img bg-orange-600 text-white">
+                  {avatar ? (
+                    <img
+                      className="avater-img"
+                      src={authorImage}
+                      alt={fullName}
+                      onError={(e) => {
+                        e.currentTarget.src = "https://via.placeholder.com/150";
+                      }}
+                    />
+                  ) : (
+                    <span className="">{fullName.charAt(0)}</span>
+                  )}
+                </div>
+                <Link to={"/profile"}>
+                  <span className="text-white ml-2">{fullName}</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
