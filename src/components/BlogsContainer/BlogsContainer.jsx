@@ -1,7 +1,6 @@
 import React from "react";
 import BlogContents from "./BlogContents";
 import SideBar from "./SideBar";
-import useBlogs from "../../hooks/useBlogs";
 
 const BlogsContainer = () => {
   return (
