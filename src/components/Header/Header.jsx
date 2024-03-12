@@ -1,4 +1,6 @@
 import React from "react";
+import logo from '../../assets/logo.svg'
+import searchIcon from '../../assets/icons/search.svg'
 
 const Header = () => {
   return (
@@ -7,7 +9,7 @@ const Header = () => {
         {/* <!-- Logo --> */}
         <div>
           <a href="./index.html">
-            <img className="w-32" src="./assets/logo.svg" alt="lws" />
+            <img className="w-32" src={logo} alt="lws" />
           </a>
         </div>
 
@@ -30,7 +32,7 @@ const Header = () => {
                 href="./search.html"
                 className="flex items-center gap-2 cursor-pointer"
               >
-                <img src="./assets/icons/search.svg" alt="Search" />
+                <img src={searchIcon} alt="Search" />
                 <span>Search</span>
               </a>
             </li>
