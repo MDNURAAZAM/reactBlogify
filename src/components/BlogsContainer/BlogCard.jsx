@@ -1,54 +1,81 @@
 import React, { useState } from "react";
-import image from "../../assets/blogs/React-Roadmap.jpg"
 import dotIcon from "../../assets/icons/3dots.svg";
 import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
+import { formatDate } from "../../utils/formatDate";
+import { baseURL } from "../../../config";
 
-const BlogCard = () => {
+const BlogCard = ({ blogDetails }) => {
+  const {
+    id,
+    title,
+    content,
+    thumbnail,
+    author,
+    tags,
+    likes,
+    comments,
+    createdAt,
+  } = blogDetails || {};
+  const blogImage = `${baseURL}/uploads/blog/${thumbnail}`;
+  const authorImage = `${baseURL}/uploads/avatar/${author?.avatar}`;
+
+  const fullName = `${author?.firstName} ${author.lastName}`;
   const [showModal, setShowModal] = useState(false);
 
   const handleDotClick = (e) => {
     e.stopPropagation();
     setShowModal((s) => !s);
   };
+
   return (
     <div className="blog-card">
       <img
         className="blog-thumb"
-        src={image}
-        alt=""
+        src={blogImage}
+        alt={title}
+        onError={(e) => {
+          e.currentTarget.src = "https://via.placeholder.com/150";
+        }}
       />
       <div className="mt-2 relative">
         <a href="./single-blog.html">
           <h3 className="text-slate-300 text-xl lg:text-2xl">
-            <a href="./single-blog.html">React Roadmap in 2024</a>
+            <a href="./single-blog.html">{title}</a>
           </h3>
         </a>
-        <p className="mb-6 text-base text-slate-500 mt-1">
-          Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor
-          pretium donec dictum. Vici consequat justo enim. Venenatis eget
-          adipiscing luctus lorem.
-        </p>
+        <p className="mb-6 text-base text-slate-500 mt-1">{content}</p>
 
         {/* <!-- Meta Informations --> */}
         <div className="flex justify-between items-center">
           <div className="flex items-center capitalize space-x-2">
             <div className="avater-img bg-indigo-600 text-white">
-              <span className="">S</span>
+              {author?.avatar ? (
+                 <img
+                 className="avater-img"
+                 src={authorImage}
+                 alt={title}
+                 onError={(e) => {
+                   e.currentTarget.src = "https://via.placeholder.com/150";
+                 }}
+               />
+              ) : (
+                <span className="">{fullName.charAt(0)}</span>
+              )}
             </div>
 
             <div>
               <h5 className="text-slate-500 text-sm">
-                <a href="./profile.html">Saad Hasan</a>
+                <a href="./profile.html">{fullName}</a>
               </h5>
               <div className="flex items-center text-xs text-slate-700">
-                <span>June 28, 2018</span>
+                <span>{formatDate(createdAt)}</span>
               </div>
             </div>
           </div>
 
           <div className="text-sm px-2 py-1 text-slate-700">
-            <span>100 Likes</span>
+            <span>{likes?.length} Likes</span>
           </div>
         </div>
 
