@@ -15,10 +15,9 @@ function App() {
       {" "}
       <Header />
       <Routes>
-        <Route element={<PrivateRoutes />}>
-          <Route element={<CreateBlogPage />} path="/create-blog" />
-          <Route element={<ProfilePage />} path="/profile" />
-        </Route>
+        <Route element={<PrivateRoutes />}></Route>
+        <Route element={<CreateBlogPage />} path="/create-blog" />
+        <Route element={<ProfilePage />} path="/profile" />
         <Route element={<HomePage />} path="/" exact />
         <Route element={<SingleBlogPage />} path="/blogs/:blogId" />
         <Route element={<LoginPage />} path="/login" />

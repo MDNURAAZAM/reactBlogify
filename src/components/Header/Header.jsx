@@ -1,7 +1,8 @@
 import React from "react";
-import logo from '../../assets/logo.svg'
-import searchIcon from '../../assets/icons/search.svg'
+import logo from "../../assets/logo.svg";
+import searchIcon from "../../assets/icons/search.svg";
 import { Link } from "react-router-dom";
+import AuthorName from "../AuthorName/AuthorName";
 
 const Header = () => {
   return (
@@ -22,7 +23,7 @@ const Header = () => {
           <ul className="flex items-center space-x-5">
             <li>
               <Link
-                to='/create-blog'
+                to="/create-blog"
                 className="bg-indigo-600 text-white px-6 py-2 md:py-3 rounded-md hover:bg-indigo-700 transition-all duration-200"
               >
                 Write
@@ -39,7 +40,7 @@ const Header = () => {
             </li>
             <li>
               <Link
-                to={'/login'}
+                to={"/login"}
                 className="text-white/50 hover:text-white transition-all duration-200"
               >
                 {" "}
@@ -54,7 +55,7 @@ const Header = () => {
               </div>
 
               {/* <!-- Logged-in user's name --> */}
-              <span className="text-white ml-2">Saad Hasan</span>
+              <AuthorName />
               {/* <!-- Profile Image --> */}
             </li>
           </ul>
