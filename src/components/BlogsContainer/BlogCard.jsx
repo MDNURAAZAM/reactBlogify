@@ -6,8 +6,10 @@ import { formatDate } from "../../utils/formatDate";
 import { baseURL } from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 import AuthorName from "../AuthorName/AuthorName";
+import { useAuth } from "../../contexts/AuthContext";
 
 const BlogCard = ({ blogDetails }) => {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const {
     id,
@@ -39,6 +41,8 @@ const BlogCard = ({ blogDetails }) => {
     e.stopPropagation();
     navigate(`/profile/${author?.id}`);
   };
+
+  const showDots = auth?.user?.id == author?.id;
 
   return (
     <div className="blog-card" onClick={handleBlogClick}>
@@ -97,25 +101,27 @@ const BlogCard = ({ blogDetails }) => {
         </div>
 
         {/* <!-- action dot --> */}
-        <div className="absolute right-0 top-0">
-          <button onClick={handleDotClick}>
-            <img src={dotIcon} alt="3dots of Action" />
-          </button>
+        {showDots && (
+          <div className="absolute right-0 top-0">
+            <button onClick={handleDotClick}>
+              <img src={dotIcon} alt="3dots of Action" />
+            </button>
 
-          {/* <!-- Action Menus Popup --> */}
-          {showModal && (
-            <div className="action-modal-container">
-              <button className="action-menu-item hover:text-lwsGreen">
-                <img src={editIcon} alt="Edit" />
-                Edit
-              </button>
-              <button className="action-menu-item hover:text-red-500">
-                <img src={deleteIcon} alt="Delete" />
-                Delete
-              </button>
-            </div>
-          )}
-        </div>
+            {/* <!-- Action Menus Popup --> */}
+            {showModal && (
+              <div className="action-modal-container">
+                <button className="action-menu-item hover:text-lwsGreen">
+                  <img src={editIcon} alt="Edit" />
+                  Edit
+                </button>
+                <button className="action-menu-item hover:text-red-500">
+                  <img src={deleteIcon} alt="Delete" />
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         {/* <!-- action dot ends --> */}
       </div>
     </div>

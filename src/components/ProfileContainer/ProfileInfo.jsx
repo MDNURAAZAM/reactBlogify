@@ -2,11 +2,14 @@ import React from "react";
 import AuthorName from "../AuthorName/AuthorName";
 import { baseURL } from "../../../config";
 import editIcon from "../../assets/icons/edit.svg";
+import { useAuth } from "../../contexts/AuthContext";
 
 const ProfileInfo = ({ profile }) => {
+  const { auth } = useAuth();
   const { id, email, firstName, lastName, avatar, bio } = profile || {};
   const fullName = `${firstName} ${lastName}`;
   const authorImage = `${baseURL}/uploads/avatar/${avatar}`;
+  const loggedIn = auth?.user?.id == id;
   return (
     <div className="flex flex-col items-center py-8 text-center">
       {/* <!-- profile image --> */}
@@ -26,9 +29,11 @@ const ProfileInfo = ({ profile }) => {
           )}
         </div>
 
-        <button className="grid place-items-center absolute bottom-0 right-0 h-7 w-7 rounded-full bg-slate-700 hover:bg-slate-700/80">
-          <img src={editIcon} alt="Edit" />
-        </button>
+        {loggedIn && (
+          <button className="grid place-items-center absolute bottom-0 right-0 h-7 w-7 rounded-full bg-slate-700 hover:bg-slate-700/80">
+            <img src={editIcon} alt="Edit" />
+          </button>
+        )}
       </div>
       {/* <!-- name , email --> */}
       <div>
@@ -44,9 +49,11 @@ const ProfileInfo = ({ profile }) => {
           <p className="leading-[188%] text-gray-400 lg:text-lg">{bio}</p>
         </div>
         {/* <!-- Edit Bio button. The Above bio will be editable when clicking on the button --> */}
-        <button className="flex-center h-7 w-7 rounded-full">
-          <img src={editIcon} alt="Edit" />
-        </button>
+        {loggedIn && (
+          <button className="flex-center h-7 w-7 rounded-full">
+            <img src={editIcon} alt="Edit" />
+          </button>
+        )}
       </div>
       <div className="w-3/4 border-b border-[#3F3F3F] py-6 lg:py-8"></div>
     </div>
