@@ -13,19 +13,29 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
+    setError("");
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await register(data);
-      if (response.status === 201) {
-        navigate("/login");
+    const isValid =
+      data?.email?.length > 0 &&
+      data?.firstName?.length > 0 &&
+      data?.lastName?.length > 0 &&
+      data?.password?.length > 0;
+    if (isValid) {
+      try {
+        const response = await register(data);
+        if (response.status === 201) {
+          navigate("/login");
+        }
+      } catch (error) {
+        setError(error?.response?.data?.error);
       }
-    } catch (error) {
-      setError(error?.response?.data?.error);
+    } else {
+      setError("Please enter all the fields");
     }
   };
 
