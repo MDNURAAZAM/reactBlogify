@@ -7,9 +7,11 @@ import { baseURL } from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 import AuthorName from "../AuthorName/AuthorName";
 import { useAuth } from "../../contexts/AuthContext";
+import useAxios from "../../hooks/useAxios";
 
-const BlogCard = ({ blogDetails }) => {
+const BlogCard = ({ blogDetails, onDelete }) => {
   const { auth } = useAuth();
+  const { axiosInstance } = useAxios();
   const navigate = useNavigate();
   const {
     id,
@@ -41,6 +43,11 @@ const BlogCard = ({ blogDetails }) => {
     e.stopPropagation();
     navigate(`/profile/${author?.id}`);
   };
+
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    onDelete(id)
+  }
 
   const showDots = auth?.user?.id == author?.id;
 
@@ -114,7 +121,10 @@ const BlogCard = ({ blogDetails }) => {
                   <img src={editIcon} alt="Edit" />
                   Edit
                 </button>
-                <button className="action-menu-item hover:text-red-500">
+                <button
+                  className="action-menu-item hover:text-red-500"
+                  onClick={handleDeleteClick}
+                >
                   <img src={deleteIcon} alt="Delete" />
                   Delete
                 </button>
