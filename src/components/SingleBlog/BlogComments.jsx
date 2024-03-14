@@ -3,6 +3,7 @@ import SingleComment from "./SingleComment";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import { useAuth } from "../../contexts/AuthContext";
+import { baseURL } from "../../../config";
 
 const BlogComments = ({ comments, loggedIn }) => {
   const { auth } = useAuth();
@@ -11,7 +12,10 @@ const BlogComments = ({ comments, loggedIn }) => {
   const { axiosInstance } = useAxios();
   const [commentsLocal, setCommentsLocal] = useState([...comments]);
 
-  const { avatar, firstName, id } = auth?.user || {};
+  const { avatar, firstName, lastName, id } = auth?.user || {};
+
+  const authorImage = `${baseURL}/uploads/avatar/${avatar}`;
+  const fullName = `${firstName} ${lastName}`;
 
   const handleCommentClick = async () => {
     if (comment?.length > 0) {
