@@ -39,7 +39,7 @@ const SingleBlogContainer = ({ blogId }) => {
     navigate(`/profile/${author?.id}`);
   };
 
-  const loggedIn = auth?.user?.id == author?.id;
+  const loggedIn = auth?.user?.id?.length > 0
 
   if (loading) {
     return <LoadingComponent />;
