@@ -20,7 +20,7 @@ function App() {
           <Route element={<CreateBlogPage />} path="/create-blog" />
         </Route>
 
-        <Route element={<ProfilePage />} path="/profile" />
+        <Route element={<ProfilePage />} path="/profile/:profileId" />
         <Route element={<HomePage />} path="/" exact />
         <Route element={<SingleBlogPage />} path="/blogs/:blogId" />
         <Route element={<LoginPage />} path="/login" />

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AuthorName from "../AuthorName/AuthorName";
 
 const PopularBlogItem = ({ blog }) => {
   const { id, title, author, likes } = blog || {};
@@ -14,8 +15,7 @@ const PopularBlogItem = ({ blog }) => {
         {title}
       </h3>
       <p className="text-slate-600 text-sm">
-        by
-        <a href="./profile.html">{fullName}</a>
+        by <AuthorName id={author?.id} fullName={fullName} />
         <span>·</span> {likes?.length} {likes?.length > 1 ? "Likes" : "Like"}
       </p>
     </li>

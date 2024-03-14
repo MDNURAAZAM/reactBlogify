@@ -1,12 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const AuthorName = () => {
-  return (
-    <Link to={"/profile"}>
-      <span className="text-white ml-2">Saad Hasan</span>
-    </Link>
-  );
+const AuthorName = ({ id, fullName }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    navigate(`/profile/${id}`);
+  };
+
+  return <button onClick={handleClick}>{ fullName}</button>;
 };
 
 export default AuthorName;

@@ -5,6 +5,7 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import { formatDate } from "../../utils/formatDate";
 import { baseURL } from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
+import AuthorName from "../AuthorName/AuthorName";
 
 const BlogCard = ({ blogDetails }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const BlogCard = ({ blogDetails }) => {
   const blogImage = `${baseURL}/uploads/blog/${thumbnail}`;
   const authorImage = `${baseURL}/uploads/avatar/${author?.avatar}`;
 
-  const fullName = `${author?.firstName} ${author.lastName}`;
+  const fullName = `${author?.firstName} ${author?.lastName}`;
   const [showModal, setShowModal] = useState(false);
 
   const handleDotClick = (e) => {
@@ -32,6 +33,11 @@ const BlogCard = ({ blogDetails }) => {
 
   const handleBlogClick = () => {
     navigate(`/blogs/${id}`);
+  };
+
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    navigate(`/profile/${author?.id}`);
   };
 
   return (
@@ -54,7 +60,10 @@ const BlogCard = ({ blogDetails }) => {
 
         {/* <!-- Meta Informations --> */}
         <div className="flex justify-between items-center">
-          <div className="flex items-center capitalize space-x-2">
+          <div
+            className="flex items-center capitalize space-x-2"
+            onClick={handleProfileClick}
+          >
             <div className="avater-img bg-indigo-600 text-white">
               {author?.avatar ? (
                 <img
@@ -72,7 +81,7 @@ const BlogCard = ({ blogDetails }) => {
 
             <div>
               <h5 className="text-slate-500 text-sm">
-                <a href="./profile.html">{fullName}</a>
+                <AuthorName id={author?.id} fullName={fullName} />
               </h5>
               <div className="flex items-center text-xs text-slate-700">
                 <span>{formatDate(createdAt)}</span>
