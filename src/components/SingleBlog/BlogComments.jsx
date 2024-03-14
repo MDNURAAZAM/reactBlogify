@@ -31,15 +31,18 @@ const BlogComments = ({ comments, loggedIn }) => {
     navigate(`/profile/${id}`);
   };
 
-  const handleDeleteClick = async(id) => {
-    const url = `${location.pathname}/comment/${id}`;
-    try {
-      const response = await axiosInstance.delete(url);
-      if (response.status === 200) {
-        setCommentsLocal(response?.data?.comments);
+  const handleDeleteClick = async (id) => {
+    let result = window.confirm("Are you sure?");
+    if (result) {
+      const url = `${location.pathname}/comment/${id}`;
+      try {
+        const response = await axiosInstance.delete(url);
+        if (response.status === 200) {
+          setCommentsLocal(response?.data?.comments);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
