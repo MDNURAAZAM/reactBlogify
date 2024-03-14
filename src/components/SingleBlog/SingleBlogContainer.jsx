@@ -86,7 +86,7 @@ const SingleBlogContainer = ({ blogId }) => {
         {/* <!-- End Blogs --> */}
 
         {/* <!-- Begin Comments --> */}
-        <BlogComments />
+        <BlogComments comments={comments} />
       </main>
 
       <div className="floating-action">

@@ -1,6 +1,6 @@
 import React from "react";
 
-const BlogComments = () => {
+const BlogComments = ({comments}) => {
   return (
     <section id="comments">
       <div className="mx-auto w-full md:w-10/12 container">
@@ -43,47 +43,7 @@ const BlogComments = () => {
           </div>
         </div>
 
-        {/* <!-- Comment Two --> */}
-        <div className="flex items-start space-x-4 my-8">
-          <div className="avater-img bg-green-600 text-white">
-            <span className="">S</span>
-          </div>
-          <div className="w-full">
-            <h5 className="text-slate -500 font-bold">Saad Hasan</h5>
-            <p className="text-slate-300">
-              Today I was mob programming with Square's Mobile & Performance
-              Reliability team and we toyed with an interesting idea. Our
-              codebase has classNamees that represent screens a user can
-              navigate to. These classNamees are defined in modules, and these
-              modules have an owner team defined. When navigating to a screen,
-              we wanted to have the owner team information available, at
-              runtime. We created a build tool that looks at about 1000 Screen
-              classNamees, determines the owner team, and generates a className
-              to do the lookup at runtime. The generated code looked like this:
-            </p>
-          </div>
-        </div>
-
-        {/* <!-- Comment Three --> */}
-        <div className="flex items-start space-x-4 my-8">
-          <div className="avater-img bg-indigo-600 text-white">
-            <span className="">S</span>
-          </div>
-          <div className="w-full">
-            <h5 className="text-slate -500 font-bold">Saad Hasan</h5>
-            <p className="text-slate-300">
-              Today I was mob programming with Square's Mobile & Performance
-              Reliability team and we toyed with an interesting idea. Our
-              codebase has classNamees that represent screens a user can
-              navigate to. These classNamees are defined in modules, and these
-              modules have an owner team defined. When navigating to a screen,
-              we wanted to have the owner team information available, at
-              runtime. We created a build tool that looks at about 1000 Screen
-              classNamees, determines the owner team, and generates a className
-              to do the lookup at runtime. The generated code looked like this:
-            </p>
-          </div>
-        </div>
+      
       </div>
     </section>
   );
