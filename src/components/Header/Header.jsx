@@ -24,6 +24,10 @@ const Header = () => {
     }
   };
 
+  const handleProfileClick = () => {
+    navigate(`/profile/${id}`)
+  }
+
   return (
     <header>
       <nav className="container">
@@ -68,7 +72,7 @@ const Header = () => {
               </button>
             </li>
             {id && (
-              <li className="flex items-center">
+              <li className="flex items-center" onClick={handleProfileClick}>
                 {/* <!-- Circular Div with background color --> */}
                 <div className="avater-img bg-orange-600 text-white">
                   {avatar ? (
@@ -84,9 +88,10 @@ const Header = () => {
                     <span className="">{fullName.charAt(0)}</span>
                   )}
                 </div>
-                <Link to={"/profile"}>
-                  <span className="text-white ml-2">{fullName}</span>
-                </Link>
+
+                <span className="text-white ml-2">
+                  <AuthorName id={id} fullName={fullName} />
+                </span>
               </li>
             )}
           </ul>

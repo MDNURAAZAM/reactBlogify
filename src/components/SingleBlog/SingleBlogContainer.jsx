@@ -43,7 +43,7 @@ const SingleBlogContainer = ({ blogId }) => {
 
   return (
     <>
-      <main>
+      {id &&<main>
         {/* <!-- Begin Blogs --> */}
         <section>
           <div className="container text-center py-8">
@@ -98,7 +98,7 @@ const SingleBlogContainer = ({ blogId }) => {
 
         {/* <!-- Begin Comments --> */}
         <BlogComments comments={comments} />
-      </main>
+      </main>}
 
       <div className="floating-action">
         <ul className="floating-action-menus">

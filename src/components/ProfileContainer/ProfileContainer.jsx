@@ -14,8 +14,8 @@ const ProfileContainer = ({ profileId }) => {
   }
 
   return (
-    <main class="mx-auto max-w-[1020px] py-8">
-      <div class="container">
+    <main className="mx-auto max-w-[1020px] py-8">
+      <div className="container">
         {/* <!-- profile info --> */}
         <ProfileInfo profile={profile}/>
         {/* <!-- end profile info --> */}
