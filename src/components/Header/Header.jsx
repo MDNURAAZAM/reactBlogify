@@ -25,8 +25,8 @@ const Header = () => {
   };
 
   const handleProfileClick = () => {
-    navigate(`/profile/${id}`)
-  }
+    navigate(`/profile/${id}`);
+  };
 
   return (
     <header>
@@ -54,13 +54,13 @@ const Header = () => {
             </li>
             {id && (
               <li>
-                <a
-                  href="./search.html"
+                <button
+                  disabled={true}
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <img src={searchIcon} alt="Search" />
                   <span>Search</span>
-                </a>
+                </button>
               </li>
             )}
             <li>
