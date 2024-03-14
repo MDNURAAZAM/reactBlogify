@@ -14,15 +14,18 @@ const BlogComments = ({ comments, loggedIn }) => {
   const { avatar, firstName, id } = auth?.user || {};
 
   const handleCommentClick = async () => {
-    const url = `${location.pathname}/comment`;
-    const formData = { content: comment };
-    try {
-      const response = await axiosInstance.post(url, formData);
-      if (response.status === 200) {
-        setCommentsLocal(response?.data?.comments);
+    if (comment?.length > 0) {
+      const url = `${location.pathname}/comment`;
+      const formData = { content: comment };
+      try {
+        const response = await axiosInstance.post(url, formData);
+        if (response.status === 200) {
+          setCommentsLocal(response?.data?.comments);
+          setComment("");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   const navigate = useNavigate();
@@ -80,6 +83,7 @@ const BlogComments = ({ comments, loggedIn }) => {
               ></textarea>
               <div className="flex justify-end mt-4">
                 <button
+                  disabled={comment?.length === 0}
                   onClick={handleCommentClick}
                   className="bg-indigo-600 text-white px-6 py-2 md:py-3 rounded-md hover:bg-indigo-700 transition-all duration-200"
                 >
