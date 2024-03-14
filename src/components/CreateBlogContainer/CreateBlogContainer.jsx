@@ -46,9 +46,9 @@ const CreateBlogContainer = () => {
       //   if(imgRef.current?.files[0]){
       //     formDataWithImage?.append("thumbnail", imgRef.current?.files[0]);
       //   }
-      //   for(const file of imgRef.current?.files){
-      //     formDataWithImage?.append("thumbnail", file);
-      //   }
+        for(const file of imgRef.current?.files){
+          formDataWithImage?.append("thumbnail", file);
+        }
 
       // Append other form fields to FormData
       for (const key in formData) {
