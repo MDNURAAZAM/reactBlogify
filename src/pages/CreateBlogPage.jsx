@@ -1,10 +1,9 @@
 import React from 'react';
+import CreateBlogContainer from '../components/CreateBlogContainer/CreateBlogContainer';
 
 const CreateBlogPage = () => {
     return (
-        <div>
-            Create Blog
-        </div>
+        <CreateBlogContainer />
     );
 };
 
