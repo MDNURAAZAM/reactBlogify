@@ -10,9 +10,12 @@ const CreateBlogContainer = () => {
     content: "",
     tags: [],
   });
+
+  const [error, setError] = useState("");
   const imgRef = useRef(null);
 
   const handleChange = (e) => {
+    setError('')
     const { name, value } = e.target;
     if (name === "tags") {
       setFormData({ ...formData, [name]: value?.split(",") });
@@ -41,27 +44,36 @@ const CreateBlogContainer = () => {
     //   return;
 
     // }
-    try {
-      const formDataWithImage = new FormData();
-      //   if(imgRef.current?.files[0]){
-      //     formDataWithImage?.append("thumbnail", imgRef.current?.files[0]);
-      //   }
-      for (const file of imgRef.current?.files) {
-        formDataWithImage?.append("thumbnail", file);
-      }
+    const isValid =
+      formData?.title?.length > 0 &&
+      formData?.content?.length > 0 &&
+      formData.tags?.length > 0;
 
-      // Append other form fields to FormData
-      for (const key in formData) {
-        formDataWithImage.append(key, formData[key]);
-      }
+    if (isValid) {
+      try {
+        const formDataWithImage = new FormData();
+        //   if(imgRef.current?.files[0]){
+        //     formDataWithImage?.append("thumbnail", imgRef.current?.files[0]);
+        //   }
+        for (const file of imgRef.current?.files) {
+          formDataWithImage?.append("thumbnail", file);
+        }
 
-      const response = await axiosInstance.post("/blogs/", formDataWithImage);
-      console.log(response);
-      if (response.status == 201) {
-        navigate(`/blogs/${response?.data?.blog?.id}`);
+        // Append other form fields to FormData
+        for (const key in formData) {
+          formDataWithImage.append(key, formData[key]);
+        }
+
+        const response = await axiosInstance.post("/blogs/", formDataWithImage);
+        console.log(response);
+        if (response.status == 201) {
+          navigate(`/blogs/${response?.data?.blog?.id}`);
+        }
+      } catch (error) {
+        setError("error occured");
       }
-    } catch (error) {
-      console.error("Error uploading image:", error);
+    } else {
+      setError("Please enter all the fields");
     }
   };
   return (
@@ -142,7 +154,7 @@ const CreateBlogContainer = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
-
+            {error && <p style={{ color: "red", margin: "5px" }}>{error}</p>}
             <button
               //   href="./createBlog.html"
               type="submit"
