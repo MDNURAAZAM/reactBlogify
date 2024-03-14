@@ -49,6 +49,11 @@ const BlogCard = ({ blogDetails, onDelete }) => {
     onDelete(id)
   }
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    navigate(`/update-blog/${id}`);
+  }
+
   const showDots = auth?.user?.id == author?.id;
 
   return (
@@ -117,7 +122,7 @@ const BlogCard = ({ blogDetails, onDelete }) => {
             {/* <!-- Action Menus Popup --> */}
             {showModal && (
               <div className="action-modal-container">
-                <button className="action-menu-item hover:text-lwsGreen">
+                <button onClick={handleEditClick} className="action-menu-item hover:text-lwsGreen">
                   <img src={editIcon} alt="Edit" />
                   Edit
                 </button>
@@ -125,7 +130,7 @@ const BlogCard = ({ blogDetails, onDelete }) => {
                   className="action-menu-item hover:text-red-500"
                   onClick={handleDeleteClick}
                 >
-                  <img src={deleteIcon} alt="Delete" />
+                  <img src={deleteIcon} alt="Delete"/>
                   Delete
                 </button>
               </div>

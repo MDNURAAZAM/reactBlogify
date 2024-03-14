@@ -8,6 +8,7 @@ import SingleBlogPage from "./pages/SingleBlogPage";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import CreateBlogPage from "./pages/CreateBlogPage";
 import ProfilePage from "./pages/ProfilePage";
+import UpdateBlogContainer from "./components/UpdateBlogContainer/UpdateBlogContainer";
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
         <Route element={<PrivateRoutes />}>
           {" "}
           <Route element={<CreateBlogPage />} path="/create-blog" />
+          <Route
+            element={<UpdateBlogContainer />}
+            path="/update-blog/:blogId"
+          />
         </Route>
 
         <Route element={<ProfilePage />} path="/profile/:profileId" />
